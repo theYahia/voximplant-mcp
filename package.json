@@ -1,12 +1,18 @@
 {
   "name": "@theyahia/voximplant-mcp",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "MCP server for Voximplant API — call history, users, SMS. 3 tools.",
   "type": "module",
   "main": "dist/index.js",
-  "bin": { "voximplant-mcp": "dist/index.js" },
-  "files": ["dist"],
-  "engines": { "node": ">=18.0.0" },
+  "bin": {
+    "voximplant-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/index.ts",
@@ -22,11 +28,26 @@
     "tsx": "^4.19.0",
     "typescript": "^5.7.0"
   },
-  "publishConfig": { "access": "public" },
+  "publishConfig": {
+    "access": "public"
+  },
   "mcpName": "io.github.theYahia/voximplant-mcp",
-  "keywords": ["mcp", "mcp-server", "model-context-protocol", "claude", "ai", "russian-api", "voximplant", "telephony", "sms"],
+  "keywords": [
+    "mcp",
+    "mcp-server",
+    "model-context-protocol",
+    "claude",
+    "ai",
+    "russian-api",
+    "voximplant",
+    "telephony",
+    "sms"
+  ],
   "license": "MIT",
-  "repository": { "type": "git", "url": "https://github.com/theYahia/voximplant-mcp.git" },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/theYahia/voximplant-mcp.git"
+  },
   "homepage": "https://github.com/theYahia/voximplant-mcp#readme",
   "author": "theYahia (https://github.com/theYahia)"
 }
