@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "voximplant": {
+      "command": "npx",
+      "args": ["-y", "@theyahia/voximplant-mcp"],
+      "env": {
+        "VOXIMPLANT_ACCOUNT_ID": "",
+        "VOXIMPLANT_API_KEY": ""
+      }
+    }
+  }
+}
