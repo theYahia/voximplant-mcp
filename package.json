@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/voximplant-mcp",
   "version": "1.0.1",
-  "description": "MCP server for Voximplant API — call history, users, SMS. 3 tools.",
+  "description": "MCP server for Voximplant API — calls, users, SMS, accounts, scenarios, rules. 6 tools + 2 skills.",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -17,6 +17,7 @@
     "build": "tsc",
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
+    "test": "vitest run",
     "prepublishOnly": "npm run build"
   },
   "dependencies": {
@@ -26,7 +27,8 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "tsx": "^4.19.0",
-    "typescript": "^5.7.0"
+    "typescript": "^5.7.0",
+    "vitest": "^4.1.2"
   },
   "publishConfig": {
     "access": "public"
