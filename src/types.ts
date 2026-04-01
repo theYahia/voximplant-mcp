@@ -18,3 +18,27 @@ export interface VoxSmsResult {
   result: number;
   message_id?: string;
 }
+
+export interface VoxAccountInfo {
+  account_id: number;
+  account_name: string;
+  account_email?: string;
+  api_key?: string;
+  live_balance?: number;
+  currency?: string;
+}
+
+export interface VoxScenario {
+  scenario_id: number;
+  scenario_name: string;
+  scenario_script?: string;
+  modified?: string;
+}
+
+export interface VoxRule {
+  rule_id: number;
+  rule_name: string;
+  rule_pattern: string;
+  scenario_id?: number;
+  scenario_name?: string;
+}
