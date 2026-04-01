@@ -1,7 +1,7 @@
 {
   "name": "@theyahia/voximplant-mcp",
-  "version": "1.0.1",
-  "description": "MCP server for Voximplant API — call history, users, SMS. 3 tools.",
+  "version": "1.1.1",
+  "description": "MCP server for Voximplant — cloud telephony, call history, SMS (Russia)",
   "type": "module",
   "main": "dist/index.js",
   "bin": {
@@ -41,7 +41,11 @@
     "russian-api",
     "voximplant",
     "telephony",
-    "sms"
+    "sms",
+    "api",
+    "typescript",
+    "voice",
+    "cpaas"
   ],
   "license": "MIT",
   "repository": {
