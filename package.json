@@ -1,6 +1,6 @@
 {
   "name": "@theyahia/voximplant-mcp",
-  "version": "1.1.0",
+  "version": "1.2.3",
   "description": "MCP server for Voximplant — cloud telephony, call history, SMS (Russia)",
   "type": "module",
   "main": "dist/index.js",
@@ -8,7 +8,9 @@
     "voximplant-mcp": "dist/index.js"
   },
   "files": [
-    "dist"
+    "dist",
+    "README.md",
+    "smithery.yaml"
   ],
   "engines": {
     "node": ">=18.0.0"
@@ -18,10 +20,10 @@
     "dev": "tsx src/index.ts",
     "start": "node dist/index.js",
     "test": "vitest run",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build && npm test"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^1.12.0",
+    "@modelcontextprotocol/sdk": "^1.29.0",
     "zod": "^3.24.0"
   },
   "devDependencies": {
@@ -47,12 +49,21 @@
     "api",
     "typescript",
     "voice",
-    "cpaas"
+    "cpaas",
+    "fastmcp",
+    "ai-tools",
+    "ai-agents",
+    "developer-tools",
+    "llm",
+    "agentic-framework",
+    "automation",
+    "call-center",
+    "voice-ai"
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/theYahia/voximplant-mcp.git"
+    "url": "git+https://github.com/theYahia/voximplant-mcp.git"
   },
   "homepage": "https://github.com/theYahia/voximplant-mcp#readme",
   "author": "theYahia (https://github.com/theYahia)"

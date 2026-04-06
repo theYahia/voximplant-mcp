@@ -11,21 +11,30 @@ import {
   sendSmsSchema, handleSendSms,
 } from "./tools/calls.js";
 import { getAccountInfoSchema, handleGetAccountInfo } from "./tools/accounts.js";
-import { getScenariosSchema, handleGetScenarios } from "./tools/scenarios.js";
+import {
+  getScenariosSchema, handleGetScenarios,
+  updateScenarioSchema, handleUpdateScenario,
+} from "./tools/scenarios.js";
 import { getRulesSchema, handleGetRules } from "./tools/rules.js";
+import {
+  startCallSchema, handleStartCall,
+  getActiveCallsSchema, handleGetActiveCalls,
+  getSmsHistorySchema, handleGetSmsHistory,
+} from "./tools/calls-management.js";
+import { getRecordingsSchema, handleGetRecordings } from "./tools/recordings.js";
 import { skillCallHistory } from "./skills/call-history.js";
 import { skillAccountInfo } from "./skills/account-info.js";
 
-const TOOL_COUNT = 6;
+const TOOL_COUNT = 11;
 const SKILL_COUNT = 2;
 
 function createMcpServer(): McpServer {
   const server = new McpServer({
     name: "voximplant-mcp",
-    version: "1.1.0",
+    version: "1.2.3",
   });
 
-  // --- 6 Tools ---
+  // --- История и базовые операции ---
   server.tool(
     "get_call_history",
     "Получить историю звонков Voximplant за период.",
@@ -54,11 +63,49 @@ function createMcpServer(): McpServer {
     async () => ({ content: [{ type: "text", text: await handleGetAccountInfo() }] }),
   );
 
+  // --- Управление звонками ---
+  server.tool(
+    "start_call",
+    "Инициировать исходящий звонок через Voximplant по заданному правилу маршрутизации.",
+    startCallSchema.shape,
+    async (params) => ({ content: [{ type: "text", text: await handleStartCall(params) }] }),
+  );
+
+  server.tool(
+    "get_active_calls",
+    "Получить список активных сессий (звонков в процессе) в Voximplant.",
+    getActiveCallsSchema.shape,
+    async (params) => ({ content: [{ type: "text", text: await handleGetActiveCalls(params) }] }),
+  );
+
+  server.tool(
+    "get_sms_history",
+    "Получить историю SMS-сообщений за период с фильтрами по номерам.",
+    getSmsHistorySchema.shape,
+    async (params) => ({ content: [{ type: "text", text: await handleGetSmsHistory(params) }] }),
+  );
+
+  // --- Записи разговоров ---
+  server.tool(
+    "get_recordings",
+    "Получить список записей разговоров за период. Возвращает URL для скачивания записи.",
+    getRecordingsSchema.shape,
+    async (params) => ({ content: [{ type: "text", text: await handleGetRecordings(params) }] }),
+  );
+
+  // --- Сценарии и правила ---
   server.tool(
     "get_scenarios",
     "Получить список сценариев Voximplant.",
     getScenariosSchema.shape,
     async (params) => ({ content: [{ type: "text", text: await handleGetScenarios(params) }] }),
+  );
+
+  server.tool(
+    "update_scenario",
+    "Обновить код или имя сценария VoxEngine в Voximplant. Позволяет агенту динамически менять логику звонка.",
+    updateScenarioSchema.shape,
+    async (params) => ({ content: [{ type: "text", text: await handleUpdateScenario(params) }] }),
   );
 
   server.tool(
@@ -68,7 +115,7 @@ function createMcpServer(): McpServer {
     async (params) => ({ content: [{ type: "text", text: await handleGetRules(params) }] }),
   );
 
-  // --- 2 Skills (exposed as tools with skill- prefix) ---
+  // --- 2 Skills ---
   server.tool(
     skillCallHistory.name,
     skillCallHistory.description,

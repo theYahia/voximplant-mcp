@@ -1,6 +1,6 @@
 # @theyahia/voximplant-mcp
 
-MCP-сервер для Voximplant API — звонки, пользователи, SMS, аккаунты, сценарии, правила. **6 инструментов + 2 скилла.**
+MCP-сервер для Voximplant API — звонки, SMS, записи, сценарии, правила. **11 инструментов + 2 скилла.**
 
 [![npm](https://img.shields.io/npm/v/@theyahia/voximplant-mcp)](https://www.npmjs.com/package/@theyahia/voximplant-mcp)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -60,7 +60,7 @@ npx @theyahia/voximplant-mcp --http
 
 > Требуется `VOXIMPLANT_ACCOUNT_ID` и `VOXIMPLANT_API_KEY`. Получите в [панели управления Voximplant](https://manage.voximplant.com).
 
-## Инструменты (6)
+## Инструменты (11)
 
 | Инструмент | Описание |
 |------------|----------|
@@ -69,7 +69,12 @@ npx @theyahia/voximplant-mcp --http
 | `send_sms` | Отправить SMS |
 | `get_account_info` | Информация об аккаунте (баланс, тариф) |
 | `get_scenarios` | Список сценариев |
+| `update_scenario` | Обновить код/название сценария |
 | `get_rules` | Правила маршрутизации приложения |
+| `start_call` | Инициировать исходящий звонок |
+| `get_active_calls` | Активные сессии звонков |
+| `get_sms_history` | История SMS сообщений |
+| `get_recordings` | Получить ссылки на записи звонков |
 
 ## Скиллы (2)
 
@@ -87,6 +92,10 @@ npx @theyahia/voximplant-mcp --http
 Покажи информацию об аккаунте
 Какие сценарии настроены?
 Покажи правила для приложения 123
+Начни звонок по правилу 456
+Какие звонки сейчас активны?
+Покажи историю SMS за январь
+Дай ссылки на записи звонков за вчера
 ```
 
 ## Лицензия
