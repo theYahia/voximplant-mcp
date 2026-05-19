@@ -1,3 +1,5 @@
+> 📦 Part of **[WWmcp — Emerging Markets MCP](https://github.com/theYahia/WWmcp)** — 114 MCP servers for non-Western APIs (Brazil/MENA/Gulf/SE Asia/Africa/CIS).
+
 # @theyahia/voximplant-mcp
 
 MCP-сервер для Voximplant API — звонки, SMS, записи, сценарии, правила. **11 инструментов + 2 скилла.**
@@ -98,6 +100,19 @@ npx @theyahia/voximplant-mcp --http
 Дай ссылки на записи звонков за вчера
 ```
 
+## 🚀 Demo prompts
+
+> **Use case (RU):** "Запиши последние 10 звонков Voximplant, выведи длительность и номера"
+
+🤖 **Pairs well with:**
+- [`@theyahia/mts-exolve-mcp`](https://github.com/theYahia/mts-exolve-mcp)
+- [`@theyahia/mango-office-mcp`](https://github.com/theYahia/mango-office-mcp)
+- [`@theyahia/sms-ru-mcp`](https://github.com/theYahia/sms-ru-mcp)
+
 ## Лицензия
 
 MIT
+
+---
+
+⭐ **Star if you build with Voximplant** — helps other devs find this server.
