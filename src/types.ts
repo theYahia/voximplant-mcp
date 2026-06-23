@@ -42,3 +42,11 @@ export interface VoxRule {
   scenario_id?: number;
   scenario_name?: string;
 }
+
+/** Стандартный конверт списочного ответа Platform API. */
+export interface VoxListResponse<T> {
+  result?: T[];
+  total_count?: number;
+  count?: number;
+  [key: string]: unknown;
+}

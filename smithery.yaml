@@ -1,6 +1,6 @@
 name: voximplant-mcp
-description: MCP server for Voximplant API — calls, SMS, recordings, scenarios, rules. 11 tools + 2 skills.
-version: 1.2.3
+description: MCP server for Voximplant API — calls, SMS, recordings, scenarios, rules, ACD/SmartQueue, phone numbers, billing. 21 tools + 2 skills.
+version: 2.0.0
 
 startCommand:
   type: stdio

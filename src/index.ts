@@ -5,138 +5,47 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
 import { createServer } from "node:http";
 
-import {
-  getCallHistorySchema, handleGetCallHistory,
-  getUsersSchema, handleGetUsers,
-  sendSmsSchema, handleSendSms,
-} from "./tools/calls.js";
-import { getAccountInfoSchema, handleGetAccountInfo } from "./tools/accounts.js";
-import {
-  getScenariosSchema, handleGetScenarios,
-  updateScenarioSchema, handleUpdateScenario,
-} from "./tools/scenarios.js";
-import { getRulesSchema, handleGetRules } from "./tools/rules.js";
-import {
-  startCallSchema, handleStartCall,
-  getActiveCallsSchema, handleGetActiveCalls,
-  getSmsHistorySchema, handleGetSmsHistory,
-} from "./tools/calls-management.js";
-import { getRecordingsSchema, handleGetRecordings } from "./tools/recordings.js";
+import { VERSION, assertCredentials, loadDotenv } from "./config.js";
+import { registerCallTools } from "./tools/calls.js";
+import { registerAccountTools } from "./tools/accounts.js";
+import { registerScenarioTools } from "./tools/scenarios.js";
+import { registerRuleTools } from "./tools/rules.js";
+import { registerCallManagementTools } from "./tools/calls-management.js";
+import { registerRecordingTools } from "./tools/recordings.js";
+import { registerObservabilityTools } from "./tools/observability.js";
+import { registerA2pTools } from "./tools/a2p.js";
 import { skillCallHistory } from "./skills/call-history.js";
 import { skillAccountInfo } from "./skills/account-info.js";
 
-const TOOL_COUNT = 11;
+const TOOL_COUNT = 21;
 const SKILL_COUNT = 2;
 
 function createMcpServer(): McpServer {
-  const server = new McpServer({
-    name: "voximplant-mcp",
-    version: "1.2.3",
-  });
+  const server = new McpServer({ name: "voximplant-mcp", version: VERSION });
 
-  // --- История и базовые операции ---
-  server.tool(
-    "get_call_history",
-    "Получить историю звонков Voximplant за период.",
-    getCallHistorySchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetCallHistory(params) }] }),
-  );
+  // 21 инструмента, сгруппированных по доменам
+  registerCallTools(server);            // get_call_history, get_users, send_sms
+  registerAccountTools(server);         // get_account_info
+  registerCallManagementTools(server);  // start_call, get_acd_state, get_sms_history
+  registerRecordingTools(server);       // get_recordings
+  registerScenarioTools(server);        // get_scenarios, update_scenario
+  registerRuleTools(server);            // get_rules
+  registerObservabilityTools(server);   // phone_numbers, applications, queues, skills, sq_state, caller_ids, record_storages, transaction_history
+  registerA2pTools(server);             // get_a2p_sms_history, send_a2p_sms (guarded)
 
-  server.tool(
-    "get_users",
-    "Получить список пользователей Voximplant.",
-    getUsersSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetUsers(params) }] }),
-  );
-
-  server.tool(
-    "send_sms",
-    "Отправить SMS через Voximplant.",
-    sendSmsSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleSendSms(params) }] }),
-  );
-
-  server.tool(
-    "get_account_info",
-    "Получить информацию об аккаунте Voximplant (баланс, тариф, лимиты).",
-    getAccountInfoSchema.shape,
-    async () => ({ content: [{ type: "text", text: await handleGetAccountInfo() }] }),
-  );
-
-  // --- Управление звонками ---
-  server.tool(
-    "start_call",
-    "Инициировать исходящий звонок через Voximplant по заданному правилу маршрутизации.",
-    startCallSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleStartCall(params) }] }),
-  );
-
-  server.tool(
-    "get_active_calls",
-    "Получить список активных сессий (звонков в процессе) в Voximplant.",
-    getActiveCallsSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetActiveCalls(params) }] }),
-  );
-
-  server.tool(
-    "get_sms_history",
-    "Получить историю SMS-сообщений за период с фильтрами по номерам.",
-    getSmsHistorySchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetSmsHistory(params) }] }),
-  );
-
-  // --- Записи разговоров ---
-  server.tool(
-    "get_recordings",
-    "Получить список записей разговоров за период. Возвращает URL для скачивания записи.",
-    getRecordingsSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetRecordings(params) }] }),
-  );
-
-  // --- Сценарии и правила ---
-  server.tool(
-    "get_scenarios",
-    "Получить список сценариев Voximplant.",
-    getScenariosSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetScenarios(params) }] }),
-  );
-
-  server.tool(
-    "update_scenario",
-    "Обновить код или имя сценария VoxEngine в Voximplant. Позволяет агенту динамически менять логику звонка.",
-    updateScenarioSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleUpdateScenario(params) }] }),
-  );
-
-  server.tool(
-    "get_rules",
-    "Получить правила маршрутизации Voximplant для приложения.",
-    getRulesSchema.shape,
-    async (params) => ({ content: [{ type: "text", text: await handleGetRules(params) }] }),
-  );
-
-  // --- 2 Skills ---
-  server.tool(
-    skillCallHistory.name,
-    skillCallHistory.description,
-    {},
-    async () => ({ content: [{ type: "text", text: await skillCallHistory.run() }] }),
-  );
-
-  server.tool(
-    skillAccountInfo.name,
-    skillAccountInfo.description,
-    {},
-    async () => ({ content: [{ type: "text", text: await skillAccountInfo.run() }] }),
-  );
+  // 2 skills (зарегистрированы как tools без параметров)
+  server.tool(skillCallHistory.name, skillCallHistory.description, {}, () => skillCallHistory.run());
+  server.tool(skillAccountInfo.name, skillAccountInfo.description, {}, () => skillAccountInfo.run());
 
   return server;
 }
 
-async function main() {
+async function main(): Promise<void> {
+  loadDotenv();
+  assertCredentials();
+
   const useHttp = process.argv.includes("--http");
   const port = parseInt(process.env.PORT ?? "3000", 10);
-
   const server = createMcpServer();
 
   if (useHttp) {
@@ -149,7 +58,7 @@ async function main() {
         await transport.handleRequest(req, res);
       } else if (url.pathname === "/health") {
         res.writeHead(200, { "Content-Type": "application/json" });
-        res.end(JSON.stringify({ status: "ok", tools: TOOL_COUNT, skills: SKILL_COUNT }));
+        res.end(JSON.stringify({ status: "ok", version: VERSION, tools: TOOL_COUNT, skills: SKILL_COUNT }));
       } else {
         res.writeHead(404);
         res.end("Not Found");
@@ -157,12 +66,12 @@ async function main() {
     });
 
     httpServer.listen(port, () => {
-      console.error(`[voximplant-mcp] HTTP mode on http://localhost:${port}/mcp — ${TOOL_COUNT} tools, ${SKILL_COUNT} skills.`);
+      console.error(`[voximplant-mcp] HTTP mode on http://localhost:${port}/mcp — v${VERSION}, ${TOOL_COUNT} tools, ${SKILL_COUNT} skills.`);
     });
   } else {
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.error(`[voximplant-mcp] Stdio mode. ${TOOL_COUNT} tools, ${SKILL_COUNT} skills. Env: VOXIMPLANT_ACCOUNT_ID + VOXIMPLANT_API_KEY.`);
+    console.error(`[voximplant-mcp] Stdio mode. v${VERSION}, ${TOOL_COUNT} tools, ${SKILL_COUNT} skills. Env: VOXIMPLANT_ACCOUNT_ID + VOXIMPLANT_API_KEY.`);
   }
 }
 
