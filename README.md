@@ -1,6 +1,6 @@
 # @theyahia/voximplant-mcp
 
-> 🌍 Часть **[WWmcp](https://github.com/theYahia/WWmcp)** — коллекции из 114 MCP-серверов для развивающихся рынков (Россия, СНГ, MENA, Gulf, SE Asia, Africa). Единственная коллекция MCP, покрывающая не-западные API.
+> 🌍 Часть **[WWmcp](https://github.com/theYahia/WWmcp)** — коллекции из 46 MCP-серверов для развивающихся рынков (Россия, СНГ, MENA, Gulf, SE Asia, Africa). Единственная коллекция MCP, покрывающая не-западные API.
 
 MCP-сервер для **Voximplant API** — облачная телефония: история и инициация звонков, SMS и A2P-рассылки, записи разговоров, сценарии VoxEngine, правила маршрутизации, состояние ACD/SmartQueue-очередей, телефонные номера и биллинг. **21 инструмент + 2 скилла.**
 
@@ -141,3 +141,7 @@ npm test           # vitest
 ## Лицензия
 
 MIT
+
+---
+
+Часть [WWmcp](https://github.com/theYahia/WWmcp) · Telegram: [@vhodvai](https://t.me/vhodvai)
