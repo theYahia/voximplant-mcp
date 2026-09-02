@@ -1,8 +1,8 @@
-# @theyahia/voximplant-mcp
+# MCP-сервер для Voximplant — облачная телефония, звонки и SMS через ИИ
 
 > 🌍 Часть **[WWmcp](https://github.com/theYahia/WWmcp)** — коллекции из 46 MCP-серверов для развивающихся рынков (Россия, СНГ, MENA, Gulf, SE Asia, Africa). Единственная коллекция MCP, покрывающая не-западные API.
 
-MCP-сервер для **Voximplant API** — облачная телефония: история и инициация звонков, SMS и A2P-рассылки, записи разговоров, сценарии VoxEngine, правила маршрутизации, состояние ACD/SmartQueue-очередей, телефонные номера и биллинг. **21 инструмент + 2 скилла.**
+Если вы искали, как подключить Voximplant к нейросети, поднять историю звонков и записи разговоров или запустить обзвон и A2P-рассылку из чата — это оно. 21 инструмент и 2 скилла: звонки и их записи, SMS, сценарии VoxEngine, правила маршрутизации, очереди ACD/SmartQueue, телефонные номера и биллинг. Спрашиваете «сколько звонков потеряли вчера» — получаете цифру со ссылками на записи.
 
 [![npm](https://img.shields.io/npm/v/@theyahia/voximplant-mcp)](https://www.npmjs.com/package/@theyahia/voximplant-mcp)
 [![CI](https://github.com/theYahia/voximplant-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/theYahia/voximplant-mcp/actions/workflows/ci.yml)
